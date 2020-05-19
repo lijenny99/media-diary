@@ -17,3 +17,8 @@
   padding: 60px;
   box-sizing: border-box;
 }
+
+.Poster {
+  height: 300px;
+  width: auto;
+}
