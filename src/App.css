@@ -10,11 +10,15 @@
 }
 
 .MovieForm {
-  margin: 50px auto;
-  width: 60%;
+  margin: 40px auto;
+  width: 65%;
   text-align: center;
   box-shadow: 0 10px 50px #ccc;
   box-sizing: border-box;
+}
+
+.MovieDisplay {
+  text-align: left;
 }
 
 .FormText {

@@ -21,6 +21,7 @@ class MovieForm extends Component {
         formWrapper: 24,
         posterWrapper: 0,
     }
+
     getMovieData = () => {
         axios.get('http://www.omdbapi.com/?t=' + this.state.title + '&apikey=3fa2007d')
             .then(response => {
@@ -62,7 +63,7 @@ class MovieForm extends Component {
     }
 
     handleRatingChange = (event) => {
-        this.setState({ rating: event.target.value });
+        this.setState({ rating: event.currentTarget.getAttribute('value') });
         console.log(this.state.rating);
     }
 
@@ -77,6 +78,7 @@ class MovieForm extends Component {
     }
 
     render() {
+
         let poster = null
         if (this.state.posterShow) {
             poster = (
@@ -105,19 +107,11 @@ class MovieForm extends Component {
             )
         }
 
-        const onFinish = values => {
-            console.log('Success:', values);
-        };
-
-        const onFinishFailed = errorInfo => {
-            console.log('Failed:', errorInfo);
-        };
-
         return (
             <div className="MovieForm">
                 <Row>
                     <Col className="FormText" span={this.state.formWrapper}>
-                        <Form onFinish={onFinish} onFinishFailed={onFinishFailed} hideRequiredMark={true}>
+                        <Form onFinish={this.submitMovieData} hideRequiredMark={true} >
                             <Form.Item
                                 label="Movie Title"
                                 name="title"
@@ -129,15 +123,14 @@ class MovieForm extends Component {
                             {movieInfo}
                             <Row>
                                 <Col span={12}>
-                                    <Form.Item name="rate" label="Rating" rules={[{ required: true, message: 'Please add a rating' }]} onClick={this.handleRatingChange} value={this.state.rating}>
+                                    <Form.Item name="rate" label="Rating" rules={[{ required: true, message: 'Please add a rating' }]} value={this.state.rating} onClick={this.handleRatingChange}>
                                         <Rate allowHalf tooltips={desc} />
                                     </Form.Item>
 
                                 </Col>
                                 <Col span={12}>
-                                    <Form.Item name="switch" label="Spoilers?" valuePropName="checked" colon={false}
-                                        onClick={this.handleSpoilersChange}>
-                                        <Switch />
+                                    <Form.Item name="switch" label="Spoilers?" valuePropName="checked" colon={false}>
+                                        <Switch onClick={this.handleSpoilersChange} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -149,12 +142,10 @@ class MovieForm extends Component {
                             </Form.Item>
 
                             <Form.Item style={{ marginTop: '40px', marginBottom: '0px' }}>
-                                <Button type="default" htmlType="submit" onClick={this.getMovieData}>
-                                    Display Data
-                        </Button>
-                                <Button type="primary" htmlType="submit" onClick={this.submitMovieData}>
-                                    Upload Data
-                        </Button>
+                                <Button type="default" onClick={this.getMovieData}>
+                                    Display Data</Button>
+                                <Button type="primary" htmlType="submit">
+                                    Upload Data</Button>
                             </Form.Item>
 
                         </Form>
