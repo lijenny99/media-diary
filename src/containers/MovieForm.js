@@ -16,13 +16,16 @@ class MovieForm extends Component {
         posterShow: false,
         rating: 0,
         spoilers: false,
-        entry: ''
+        entry: '',
+        titleChanged: false,
+        formWrapper: 24,
+        posterWrapper: 0,
     }
     getMovieData = () => {
         axios.get('http://www.omdbapi.com/?t=' + this.state.title + '&apikey=3fa2007d')
             .then(response => {
                 if (this.state.title !== '') {
-                    this.setState({ posterShow: true })
+                    this.setState({ posterShow: true, titleChanged: true, formWrapper: 16, posterWrapper: 8 })
                 }
                 this.setState({
                     director: response.data['Director'],
@@ -82,7 +85,7 @@ class MovieForm extends Component {
         }
 
         let movieInfo = null
-        if (this.state.director !== '') {
+        if (this.state.titleChanged) {
             movieInfo = (
                 <Row>
 
@@ -112,49 +115,52 @@ class MovieForm extends Component {
 
         return (
             <div className="MovieForm">
-                <Form onFinish={onFinish} onFinishFailed={onFinishFailed} hideRequiredMark={true}>
-                    <Form.Item
-                        label="Movie Title"
-                        name="title"
-                        value={this.state.title}
-                        onChange={this.handleTitleChange}
-                        rules={[{ required: true, message: 'Please select a movie' }]}>
-                        <Input />
-                    </Form.Item>
-                    {movieInfo}
-                    <Row>
-                        <Col span={12}>
-                            <Form.Item name="rate" label="Rating" rules={[{ required: true, message: 'Please add a rating' }]}>
-                                <Rate allowHalf tooltips={desc} value={this.props.value}
-                                    onClick={this.handleRatingChange} />
+                <Row>
+                    <Col className="FormText" span={this.state.formWrapper}>
+                        <Form onFinish={onFinish} onFinishFailed={onFinishFailed} hideRequiredMark={true}>
+                            <Form.Item
+                                label="Movie Title"
+                                name="title"
+                                value={this.state.title}
+                                onChange={this.handleTitleChange}
+                                rules={[{ required: true, message: 'Please select a movie' }]}>
+                                <Input />
+                            </Form.Item>
+                            {movieInfo}
+                            <Row>
+                                <Col span={12}>
+                                    <Form.Item name="rate" label="Rating" rules={[{ required: true, message: 'Please add a rating' }]} onClick={this.handleRatingChange} value={this.state.rating}>
+                                        <Rate allowHalf tooltips={desc} />
+                                    </Form.Item>
+
+                                </Col>
+                                <Col span={12}>
+                                    <Form.Item name="switch" label="Spoilers?" valuePropName="checked" colon={false}
+                                        onClick={this.handleSpoilersChange}>
+                                        <Switch />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Form.Item name="entry"
+                                rules={[{ required: true, message: 'Please write something' }]}>
+                                <TextArea placeholder="How did this movie make you feel 😌" autoSize={{ minRows: 3 }}
+                                    value={this.state.entry}
+                                    onChange={this.handleEntryChange} />
                             </Form.Item>
 
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item name="switch" label="Spoilers?" valuePropName="checked" colon={false}
-                                onClick={this.handleSpoilersChange}>
-                                <Switch />
+                            <Form.Item style={{ marginTop: '40px', marginBottom: '0px' }}>
+                                <Button type="default" htmlType="submit" onClick={this.getMovieData}>
+                                    Display Data
+                        </Button>
+                                <Button type="primary" htmlType="submit" onClick={this.submitMovieData}>
+                                    Upload Data
+                        </Button>
                             </Form.Item>
-                        </Col>
-                    </Row>
-                    <Form.Item name="entry"
-                        rules={[{ required: true, message: 'Please write something' }]}>
-                        <TextArea placeholder="How did this movie make you feel 😌" autoSize={{ minRows: 3 }}
-                            value={this.state.entry}
-                            onChange={this.handleEntryChange} />
-                    </Form.Item>
 
-                    <Form.Item style={{ marginTop: '40px', marginBottom: '0px' }}>
-                        <Button type="default" htmlType="submit" onClick={this.getMovieData}>
-                            Display Data
-                        </Button>
-                        <Button type="primary" htmlType="submit" onClick={this.submitMovieData}>
-                            Upload Data
-                        </Button>
-                    </Form.Item>
-
-                </Form>
-                {poster}
+                        </Form>
+                    </Col>
+                    <Col span={this.state.posterWrapper}>{poster}</Col>
+                </Row>
             </div>
         )
     }

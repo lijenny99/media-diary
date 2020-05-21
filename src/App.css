@@ -14,13 +14,18 @@
   width: 60%;
   text-align: center;
   box-shadow: 0 10px 50px #ccc;
-  padding: 60px;
   box-sizing: border-box;
 }
 
+.FormText {
+  padding: 60px;
+}
+
 .Poster {
-  height: 300px;
   width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;
 }
 
 .ant-form-text {
