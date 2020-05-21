@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, Rate, Switch, Button} from 'antd';
+import { Form, Input, Rate, Switch, Button, Row, Col } from 'antd';
 import axios from 'axios';
 
 const { TextArea } = Input;
@@ -9,8 +9,9 @@ const desc = ['😴', '😬', '😐', '😊', '🤯'];
 class MovieForm extends Component {
     state = {
         title: '',
-        director: '', 
+        director: '',
         year: '',
+        genre: '',
         posterImg: '',
         posterShow: false,
         rating: 0,
@@ -18,14 +19,17 @@ class MovieForm extends Component {
         entry: ''
     }
     getMovieData = () => {
-        axios.get('http://www.omdbapi.com/?t=' + this.state.title +'&apikey=3fa2007d')
+        axios.get('http://www.omdbapi.com/?t=' + this.state.title + '&apikey=3fa2007d')
             .then(response => {
+                if (this.state.title !== '') {
+                    this.setState({ posterShow: true })
+                }
                 this.setState({
                     director: response.data['Director'],
                     year: response.data['Year'],
                     posterImg: response.data['Poster'],
                     title: response.data['Title'],
-                    posterShow: true
+                    genre: response.data['Genre'],
                 })
             })
             .catch(error => {
@@ -38,27 +42,35 @@ class MovieForm extends Component {
             title: this.state.title,
             posterImg: this.state.posterImg,
             rating: this.state.rating,
-            entry: this.state.entry
+            entry: this.state.entry,
+            spoilers: this.state.spoilers
         }
-        axios.post( 'https://media-diary-25762.firebaseio.com/movies.json', movData )
-            .then( response => {
-                alert('done!'+response);
-            } )
-            .catch( error => {
+        axios.post('https://media-diary-25762.firebaseio.com/movies.json', movData)
+            .then(response => {
+                alert('done!');
+            })
+            .catch(error => {
                 console.log(error);
-            } );
+            });
     }
 
     handleTitleChange = (event) => {
         this.setState({ title: event.target.value });
     }
 
-    // handleRatingChange = (event) => {
-    //     this.setState({ rating: event.target.value });
-    // }
+    handleRatingChange = (event) => {
+        this.setState({ rating: event.target.value });
+        console.log(this.state.rating);
+    }
 
     handleEntryChange = (event) => {
         this.setState({ entry: event.target.value });
+    }
+
+    handleSpoilersChange = () => {
+        this.setState(prevState => ({
+            spoilers: !prevState.spoilers
+        }));
     }
 
     render() {
@@ -68,20 +80,13 @@ class MovieForm extends Component {
                 <img className="Poster" src={this.state.posterImg} alt="Movie poster"></img>
             )
         }
-        return (
-            <div className="MovieForm">
-                <Form>
-                    <Form.Item
-                        label="Movie Title"
-                        name="title"
-                        value={this.state.title}
-                        onChange={this.handleTitleChange}>
-                        <Input />
-                    </Form.Item>
-                </Form>
 
-                <Form layout="inline" style={{ display: 'flex', marginBottom: '24px' }}>
-                    <Form.Item label="Director" >
+        let movieInfo = null
+        if (this.state.director !== '') {
+            movieInfo = (
+                <Row>
+
+                    <Form.Item label="Director">
                         <span className="ant-form-text">{this.state.director}</span>
                     </Form.Item>
 
@@ -89,32 +94,65 @@ class MovieForm extends Component {
                         <span className="ant-form-text">{this.state.year}</span>
                     </Form.Item>
 
-
-                    <Form.Item name="rate" label="Rating">
-                        <Rate allowHalf tooltips={desc} 
-                        value={this.state.rating}
-                        onChange={this.handleRatingChange}/>
+                    <Form.Item label="Genre">
+                        <span className="ant-form-text">{this.state.genre}</span>
                     </Form.Item>
 
-                    <Form.Item name="switch" label="Spoilers?" valuePropName="checked" colon={false}>
-                        <Switch />
-                    </Form.Item>
-                </Form>
+                </Row>
+            )
+        }
 
-                <Form>
-                    <TextArea placeholder="How did this movie make you feel 😌" autoSize={{ minRows: 3 }} 
-                    value={this.state.entry}
-                    onChange={this.handleEntryChange}/>
+        const onFinish = values => {
+            console.log('Success:', values);
+        };
+
+        const onFinishFailed = errorInfo => {
+            console.log('Failed:', errorInfo);
+        };
+
+        return (
+            <div className="MovieForm">
+                <Form onFinish={onFinish} onFinishFailed={onFinishFailed} hideRequiredMark={true}>
+                    <Form.Item
+                        label="Movie Title"
+                        name="title"
+                        value={this.state.title}
+                        onChange={this.handleTitleChange}
+                        rules={[{ required: true, message: 'Please select a movie' }]}>
+                        <Input />
+                    </Form.Item>
+                    {movieInfo}
+                    <Row>
+                        <Col span={12}>
+                            <Form.Item name="rate" label="Rating" rules={[{ required: true, message: 'Please add a rating' }]}>
+                                <Rate allowHalf tooltips={desc} value={this.props.value}
+                                    onClick={this.handleRatingChange} />
+                            </Form.Item>
+
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item name="switch" label="Spoilers?" valuePropName="checked" colon={false}
+                                onClick={this.handleSpoilersChange}>
+                                <Switch />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Form.Item name="entry"
+                        rules={[{ required: true, message: 'Please write something' }]}>
+                        <TextArea placeholder="How did this movie make you feel 😌" autoSize={{ minRows: 3 }}
+                            value={this.state.entry}
+                            onChange={this.handleEntryChange} />
+                    </Form.Item>
 
                     <Form.Item style={{ marginTop: '40px', marginBottom: '0px' }}>
-                        <Button type="primary" htmlType="submit" onClick={this.getMovieData}>
+                        <Button type="default" htmlType="submit" onClick={this.getMovieData}>
                             Display Data
                         </Button>
-
-                        <Button type="default" htmlType="submit" onClick={this.submitMovieData}>
+                        <Button type="primary" htmlType="submit" onClick={this.submitMovieData}>
                             Upload Data
                         </Button>
                     </Form.Item>
+
                 </Form>
                 {poster}
             </div>

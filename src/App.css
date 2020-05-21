@@ -22,3 +22,7 @@
   height: 300px;
   width: auto;
 }
+
+.ant-form-text {
+  margin-right: 20px;
+}
