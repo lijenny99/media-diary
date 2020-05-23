@@ -1,12 +1,23 @@
 import React from 'react';
+import { Card } from 'antd';
 
-const movieData = ( props ) => {
+const movieData = (props) => {
+    const { Meta } = Card;
+
     return (
-        <div className="MovieDisplay">
-            <h3>Title: {props.title}</h3>
-            <p>Entry: {props.entry}</p>
-            <img className="Poster" src={props.poster} alt="this don't work"></img>
-        </div>
+        <Card className="MovieCard"
+            cover={
+                <img style={{ height: '100%', width: 'auto' }}
+                    alt="example"
+                    src={props.poster}
+                />
+            }>
+            <Meta
+                title={props.title}
+                description={props.synopsis}
+                style={{ marginBottom: '15px' }}
+            />{props.entry}
+        </Card>
     );
 };
 

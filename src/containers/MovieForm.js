@@ -13,6 +13,7 @@ class MovieForm extends Component {
         year: '',
         genre: '',
         posterImg: '',
+        synopsis: '',
         posterShow: false,
         rating: 0,
         spoilers: false,
@@ -34,6 +35,7 @@ class MovieForm extends Component {
                     posterImg: response.data['Poster'],
                     title: response.data['Title'],
                     genre: response.data['Genre'],
+                    synopsis: response.data['Plot']
                 })
             })
             .catch(error => {
@@ -47,7 +49,8 @@ class MovieForm extends Component {
             posterImg: this.state.posterImg,
             rating: this.state.rating,
             entry: this.state.entry,
-            spoilers: this.state.spoilers
+            spoilers: this.state.spoilers,
+            synopsis: this.state.synopsis
         }
         axios.post('https://media-diary-25762.firebaseio.com/movies.json', movData)
             .then(response => {

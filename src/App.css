@@ -21,6 +21,13 @@
   text-align: left;
 }
 
+.MovieCard {
+  display: flex;
+  padding: auto 20px;
+  text-align: left;
+  width: 60%;
+}
+
 .FormText {
   padding: 60px;
 }

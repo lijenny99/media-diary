@@ -35,7 +35,8 @@ class MoviesData extends Component {
                         poster={movie.posterImg}
                         rating={movie.rating}
                         spoilers={movie.spoilers} 
-                        entry={movie.entry}/>
+                        entry={movie.entry}
+                        synopsis={movie.synopsis}/>
                 ))}
             </div>
         );
