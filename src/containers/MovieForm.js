@@ -111,7 +111,7 @@ class MovieForm extends Component {
         }
 
         return (
-            <div className="MovieForm">
+            <div className="Form">
                 <Row>
                     <Col className="FormText" span={this.state.formWrapper}>
                         <Form onFinish={this.submitMovieData} hideRequiredMark={true} >

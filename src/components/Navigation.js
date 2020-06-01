@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import { Menu } from 'antd';
-import { HomeOutlined, BookOutlined, PlaySquareOutlined } from '@ant-design/icons';
+import { HomeOutlined, BookOutlined, PlaySquareOutlined, LoginOutlined } from '@ant-design/icons';
 
 const Navigation = () => {
     return (
@@ -13,6 +13,8 @@ const Navigation = () => {
                 <Link to="/books">Books</Link></Menu.Item>
             <Menu.Item key="movie" icon={<PlaySquareOutlined />}>
                 <Link to="/movies">Movies</Link></Menu.Item>
+            <Menu.Item key="login" icon={<LoginOutlined />}>
+                <Link to="/login">Login</Link></Menu.Item>
         </Menu>
         </div>
     )
