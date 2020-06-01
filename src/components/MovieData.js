@@ -7,7 +7,7 @@ const movieData = (props) => {
     return (
         <Card className="MovieCard"
             cover={
-                <img style={{ height: '100%', width: 'auto' }}
+                <img style={{ height: '300px', width: 'auto' }}
                     alt="example"
                     src={props.poster}
                 />
