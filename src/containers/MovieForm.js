@@ -7,6 +7,7 @@ const { TextArea } = Input;
 const desc = ['😴', '😬', '😐', '😊', '🤯'];
 
 class MovieForm extends Component {
+
     state = {
         title: '',
         director: '',
@@ -66,8 +67,7 @@ class MovieForm extends Component {
     }
 
     handleRatingChange = (event) => {
-        this.setState({ rating: event.currentTarget.getAttribute('value') });
-        console.log(this.state.rating);
+        this.setState({ rating: event});
     }
 
     handleEntryChange = (event) => {
@@ -118,16 +118,17 @@ class MovieForm extends Component {
                             <Form.Item
                                 label="Movie Title"
                                 name="title"
-                                value={this.state.title}
-                                onChange={this.handleTitleChange}
                                 rules={[{ required: true, message: 'Please select a movie' }]}>
-                                <Input />
+                                <Input value={this.state.title}
+                                onChange={this.handleTitleChange}/>
                             </Form.Item>
                             {movieInfo}
                             <Row>
                                 <Col span={12}>
-                                    <Form.Item name="rate" label="Rating" rules={[{ required: true, message: 'Please add a rating' }]} value={this.state.rating} onClick={this.handleRatingChange}>
-                                        <Rate allowHalf tooltips={desc} />
+                                    <Form.Item name="rate" label="Rating" rules={[{ required: true, message: 'Please add a rating' }]} >
+                                        <Rate allowHalf tooltips={desc} 
+                                        onChange={this.handleRatingChange}
+                                        />
                                     </Form.Item>
 
                                 </Col>
