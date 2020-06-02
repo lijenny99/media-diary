@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { Form, Input, Button } from 'antd';
 import axios from 'axios';
 
+
 class LoginForm extends Component {
+
+    state = {
+        isAuthenticated: false,
+    }
 
     submitHandler = (values) => {
         const authData = {
@@ -17,7 +22,7 @@ class LoginForm extends Component {
             localStorage.setItem('token',response.data.idToken);
             localStorage.setItem('expirationDate',expirationDate);
             localStorage.setItem('userId',response.data.localId);
-            console.log(response);
+            this.setState({isAuthenticated: true})
         }).catch(err => {
           console.log(err.response.data.error);
         })

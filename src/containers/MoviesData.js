@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import MovieData from '../components/MovieData';
 import axios from 'axios'
+import withErrorHandler from '../hoc/withErrorHandler';
 
 class MoviesData extends Component {
     state = {
@@ -43,4 +44,4 @@ class MoviesData extends Component {
     }
 }
 
-export default MoviesData;
+export default withErrorHandler(MoviesData,axios);

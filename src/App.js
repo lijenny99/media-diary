@@ -15,7 +15,7 @@ class App extends Component {
     return (
       <div className="App">
         <BrowserRouter>
-          <NavigationPane />
+          <NavigationPane isAuthenticated={false}/>
           <Switch>
               <Route path="/movies" component={Movies} />
               <Route path="/books" component={Books} />
