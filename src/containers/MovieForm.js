@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Input, Rate, Switch, Button, Row, Col } from 'antd';
 import axios from 'axios';
+import withErrorHandler from '../hoc/withErrorHandler';
 
 const { TextArea } = Input;
 
@@ -55,7 +56,7 @@ class MovieForm extends Component {
         }
         axios.post('https://media-diary-25762.firebaseio.com/movies.json', movData)
             .then(response => {
-                alert('done!');
+                alert('done!'); // should probably fix this lol
             })
             .catch(error => {
                 console.log(error);
@@ -161,4 +162,4 @@ class MovieForm extends Component {
     }
 }
 
-export default MovieForm;
+export default withErrorHandler(MovieForm,axios);

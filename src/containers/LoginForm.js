@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Input, Button } from 'antd';
 import axios from 'axios';
-
+import withErrorHandler from '../hoc/withErrorHandler';
 
 class LoginForm extends Component {
 
@@ -23,8 +23,9 @@ class LoginForm extends Component {
             localStorage.setItem('expirationDate',expirationDate);
             localStorage.setItem('userId',response.data.localId);
             this.setState({isAuthenticated: true})
+            console.log('ur good')
         }).catch(err => {
-          console.log(err.response.data.error);
+          console.log(err);
         })
     }
 
@@ -72,4 +73,4 @@ class LoginForm extends Component {
     }
 }
 
-export default LoginForm;
+export default withErrorHandler(LoginForm,axios);
