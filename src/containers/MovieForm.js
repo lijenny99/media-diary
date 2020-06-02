@@ -45,12 +45,12 @@ class MovieForm extends Component {
             });
     }
 
-    submitMovieData = () => {
+    submitMovieData = (values) => {
         const movData = {
             title: this.state.title,
             posterImg: this.state.posterImg,
-            rating: this.state.rating,
-            entry: this.state.entry,
+            rating: values.rate,
+            entry: values.entry,
             spoilers: this.state.spoilers,
             synopsis: this.state.synopsis
         }
@@ -65,14 +65,6 @@ class MovieForm extends Component {
 
     handleTitleChange = (event) => {
         this.setState({ title: event.target.value });
-    }
-
-    handleRatingChange = (event) => {
-        this.setState({ rating: event});
-    }
-
-    handleEntryChange = (event) => {
-        this.setState({ entry: event.target.value });
     }
 
     handleSpoilersChange = () => {
@@ -128,22 +120,19 @@ class MovieForm extends Component {
                                 <Col span={12}>
                                     <Form.Item name="rate" label="Rating" rules={[{ required: true, message: 'Please add a rating' }]} >
                                         <Rate allowHalf tooltips={desc} 
-                                        onChange={this.handleRatingChange}
                                         />
                                     </Form.Item>
 
                                 </Col>
                                 <Col span={12}>
-                                    <Form.Item name="switch" label="Spoilers?" valuePropName="checked" colon={false}>
+                                    <Form.Item name="spoilers" label="Spoilers?" valuePropName="checked" colon={false}>
                                         <Switch onClick={this.handleSpoilersChange} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Form.Item name="entry"
                                 rules={[{ required: true, message: 'Please write something' }]}>
-                                <TextArea placeholder="How did this movie make you feel 😌" autoSize={{ minRows: 3 }}
-                                    value={this.state.entry}
-                                    onChange={this.handleEntryChange} />
+                                <TextArea placeholder="How did this movie make you feel 😌" autoSize={{ minRows: 3 }}/>
                             </Form.Item>
 
                             <Form.Item style={{ marginTop: '40px', marginBottom: '0px' }}>
