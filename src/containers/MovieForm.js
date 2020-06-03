@@ -26,10 +26,11 @@ class MovieForm extends Component {
     }
 
     getMovieData = () => {
-        axios.get('http://www.omdbapi.com/?t=' + this.state.title + '&apikey=3fa2007d')
+        if (this.state.title !== '' && this.state.title !== 'undefined') {
+            axios.get('http://www.omdbapi.com/?t=' + this.state.title + '&apikey=3fa2007d')
             .then(response => {
                 if (this.state.title !== '') {
-                    this.setState({ posterShow: true, titleChanged: true, formWrapper: 16, posterWrapper: 8 })
+                    this.setState({ })
                 }
                 this.setState({
                     director: response.data['Director'],
@@ -37,12 +38,17 @@ class MovieForm extends Component {
                     posterImg: response.data['Poster'],
                     title: response.data['Title'],
                     genre: response.data['Genre'],
-                    synopsis: response.data['Plot']
+                    synopsis: response.data['Plot'],
+                    posterShow: true, 
+                    titleChanged: true, 
+                    formWrapper: 16, 
+                    posterWrapper: 8 
                 })
             })
             .catch(error => {
                 console.log(error);
             });
+        }
     }
 
     submitMovieData = (values) => {
@@ -138,7 +144,8 @@ class MovieForm extends Component {
                             <Form.Item style={{ marginTop: '40px', marginBottom: '0px' }}>
                                 <Button type="default" onClick={this.getMovieData}>
                                     Display Data</Button>
-                                <Button type="primary" htmlType="submit">
+                                <Button type="primary" htmlType="submit"
+                                style={{marginLeft: '20px'}}>
                                     Upload Data</Button>
                             </Form.Item>
 
