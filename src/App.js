@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Switch, Route, Redirect, BrowserRouter} from 'react-router-dom';
+import {Switch, Route, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
 import 'antd/dist/antd.css';
 import './App.css';
 
@@ -14,8 +15,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <BrowserRouter>
-          <NavigationPane isAuthenticated={true}/>
+          <NavigationPane isAuthenticated={this.props.isAuth}/>
           <Switch>
               <Route path="/movies" component={Movies} />
               <Route path="/books" component={Books} />
@@ -23,10 +23,15 @@ class App extends Component {
               <Route path="/" exact component={Landing} />
               <Redirect to="/" />
           </Switch>
-        </BrowserRouter>
       </div>
     )
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    isAuth: state.token !== null
+  }
+}
+
+export default connect(mapStateToProps)(App);

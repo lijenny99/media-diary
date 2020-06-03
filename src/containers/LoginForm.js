@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import {Redirect} from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
+import {connect} from 'react-redux';
+
 import axios from 'axios';
+import * as actions from '../store/actions';
 import withErrorHandler from '../hoc/withErrorHandler';
 
 class LoginForm extends Component {
@@ -10,28 +14,17 @@ class LoginForm extends Component {
     }
 
     submitHandler = (values) => {
-        const authData = {
-            email: values.email,
-            password: values.password,
-            returnSecureToken: true
-        };
-        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBCafZebAOTsMnXxjX_71at_5Pz27h05Qg'
-
-        axios.post(url,authData).then(response => {
-            const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000)
-            localStorage.setItem('token',response.data.idToken);
-            localStorage.setItem('expirationDate',expirationDate);
-            localStorage.setItem('userId',response.data.localId);
-            this.setState({isAuthenticated: true})
-            console.log('ur good')
-        }).catch(err => {
-          console.log(err);
-        })
+        this.props.onAuth(values.email,values.password)
     }
 
     render() {
+        let authRedirect = null
+        if (this.props.isAuthenticated) {
+            authRedirect = <Redirect to={this.props.authRedirect} />
+        }
         return (
             <div className="Form FormText">
+                {authRedirect}
                 <Form
                     name="basic"
                     hideRequiredMark={true} 
@@ -73,4 +66,21 @@ class LoginForm extends Component {
     }
 }
 
-export default withErrorHandler(LoginForm,axios);
+const mapStateToProps = state => {
+    return {
+        loading: state.loading,
+        error: state.error,
+        isAuthenticated: state.token !== null,
+        authRedirect: state.authRedirectPath
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuth: (email,password) => dispatch(actions.auth(email,password)),
+        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
+    }
+
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(LoginForm,axios));
