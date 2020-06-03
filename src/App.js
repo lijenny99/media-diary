@@ -13,16 +13,30 @@ import Login from './components/Login';
 class App extends Component {
 
   render() {
-    return (
-      <div className="App">
-          <NavigationPane isAuthenticated={this.props.isAuth}/>
-          <Switch>
+    let routes = (
+      <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/" exact component={Landing} />
+        <Redirect to="/" />
+      </Switch>
+
+    )
+
+    if (this.props.isAuth) {
+      routes = (
+        <Switch>
               <Route path="/movies" component={Movies} />
               <Route path="/books" component={Books} />
               <Route path="/login" component={Login} />
               <Route path="/" exact component={Landing} />
-              <Redirect to="/" />
-          </Switch>
+            <Redirect to="/" />
+        </Switch>
+      )
+    }
+    return (
+      <div className="App">
+          <NavigationPane isAuthenticated={this.props.isAuth}/>
+          {routes}
       </div>
     )
   }
