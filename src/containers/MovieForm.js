@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Input, Rate, Switch, Button, Row, Col } from 'antd';
 import axios from 'axios';
 import withErrorHandler from '../hoc/withErrorHandler';
+import Search from '../components/Search';
 
 const { TextArea } = Input;
 
@@ -122,6 +123,7 @@ class MovieForm extends Component {
                                 onChange={this.handleTitleChange}/>
                             </Form.Item>
                             {movieInfo}
+                            <Row><Search /></Row>
                             <Row>
                                 <Col span={12}>
                                     <Form.Item name="rate" label="Rating" rules={[{ required: true, message: 'Please add a rating' }]} >

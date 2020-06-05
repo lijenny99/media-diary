@@ -22,7 +22,7 @@ class App extends Component {
 
     )
 
-    if (this.props.isAuth) {
+    if (true) { // this.props.isAuth
       routes = (
         <Switch>
               <Route path="/movies" component={Movies} />
