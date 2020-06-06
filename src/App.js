@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {Switch, Route, Redirect} from 'react-router-dom';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
 import './App.css';
 
@@ -11,7 +11,7 @@ import Landing from './components/Landing';
 import Login from './components/Login';
 
 class App extends Component {
-
+  
   render() {
     let routes = (
       <Switch>
@@ -25,18 +25,18 @@ class App extends Component {
     if (true) { // this.props.isAuth
       routes = (
         <Switch>
-              <Route path="/movies" component={Movies} />
-              <Route path="/books" component={Books} />
-              <Route path="/login" component={Login} />
-              <Route path="/" exact component={Landing} />
-            <Redirect to="/" />
+          <Route path="/movies" component={Movies} />
+          <Route path="/books" component={Books} />
+          <Route path="/login" component={Login} />
+          <Route path="/" exact component={Landing} />
+          <Redirect to="/" />
         </Switch>
       )
     }
     return (
       <div className="App">
-          <NavigationPane isAuthenticated={this.props.isAuth}/>
-          {routes}
+        <NavigationPane isAuthenticated={this.props.isAuth} />
+        {routes}
       </div>
     )
   }
