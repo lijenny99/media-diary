@@ -1,15 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Card, Button } from 'antd';
 
-const movieData = (props) => {
+function MovieData(props) {
+
     const { Meta } = Card;
+    const [clicked, handleClick] = useState(false);
 
     let newTitle = props.title + " (" + props.rating + "/5)"
 
     let buttonDisplay = null
-    if (props.spoilers) {
+    if (props.spoilers && !clicked) {
         buttonDisplay = (
-            <Button className="center-button">View Spoilers</Button>
+            <Button className="center-button" onClick={() => handleClick(true)}>View Spoilers</Button>
         )
     }
 
@@ -28,10 +30,15 @@ const movieData = (props) => {
             />
             <div style={{ position: 'relative' }}>
                 {buttonDisplay}
-                <p className={(props.spoilers ? 'blurry-text' : null)}>{props.entry}</p>
+                <p className={
+                    !props.spoilers ? null :
+                    [
+                        !clicked ? 'blurry-text' : null
+                    ]
+                }>{props.entry}</p>
             </div>
         </Card>
     );
 };
 
-export default movieData;
+export default MovieData;
