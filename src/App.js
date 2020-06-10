@@ -4,14 +4,20 @@ import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
 import './App.css';
 
+import * as actions from './store/actions';
+
 import NavigationPane from './components/Navigation';
 import Books from './components/Books';
 import Movies from './components/Movies';
 import Landing from './components/Landing';
 import Login from './components/Login';
+import Logout from './containers/Logout';
 
 class App extends Component {
-  
+  componentDidMount() {
+    this.props.onTryAutoSignup();
+  }
+
   render() {
     let routes = (
       <Switch>
@@ -22,12 +28,12 @@ class App extends Component {
 
     )
 
-    if (true) { // this.props.isAuth
+    if (this.props.isAuth) {
       routes = (
         <Switch>
           <Route path="/movies" component={Movies} />
           <Route path="/books" component={Books} />
-          <Route path="/login" component={Login} />
+          <Route path="/logout" component={Logout} />
           <Route path="/" exact component={Landing} />
           <Redirect to="/" />
         </Switch>
@@ -48,4 +54,10 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => {
+  return {
+    onTryAutoSignup: () => dispatch(actions.authCheckState())
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);

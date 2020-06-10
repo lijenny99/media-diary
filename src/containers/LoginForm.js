@@ -3,9 +3,7 @@ import {Redirect} from 'react-router-dom';
 import { Form, Input, Button, Modal } from 'antd';
 import {connect} from 'react-redux';
 
-// import axios from 'axios';
 import * as actions from '../store/actions';
-// import withErrorHandler from '../hoc/withErrorHandler';
 import Spinner from '../components/Spinner/Spinner';
 
 class LoginForm extends Component {
