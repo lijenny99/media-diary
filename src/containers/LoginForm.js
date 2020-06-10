@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Modal } from 'antd';
 import {connect} from 'react-redux';
 
-import axios from 'axios';
+// import axios from 'axios';
 import * as actions from '../store/actions';
-import withErrorHandler from '../hoc/withErrorHandler';
+// import withErrorHandler from '../hoc/withErrorHandler';
+import Spinner from '../components/Spinner/Spinner';
 
 class LoginForm extends Component {
 
@@ -22,10 +23,9 @@ class LoginForm extends Component {
         if (this.props.isAuthenticated) {
             authRedirect = <Redirect to={this.props.authRedirect} />
         }
-        return (
-            <div className="Form FormText">
-                {authRedirect}
-                <Form
+
+        let form = (
+<Form
                     name="basic"
                     hideRequiredMark={true} 
                     onFinish={this.submitHandler}
@@ -61,6 +61,31 @@ class LoginForm extends Component {
                             Submit</Button>
                     </Form.Item>
                 </Form>
+        )
+
+        if (this.props.loading) {
+            form = <Spinner />
+        }
+
+        let errorMessage = null;
+
+        if (this.props.error) {
+            errorMessage = (
+                <Modal visible={this.props.error}  
+                footer={null}
+                onCancel={this.props.resetError}
+                title="Oh no!">
+                    {this.props.error.message}
+                </Modal>
+            )
+        }
+
+
+        return (
+            <div className="Form FormText">
+                {authRedirect}
+                {form}
+                {errorMessage}
             </div>
         )
     }
@@ -71,16 +96,15 @@ const mapStateToProps = state => {
         loading: state.loading,
         error: state.error,
         isAuthenticated: state.token !== null,
-        authRedirect: state.authRedirectPath
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: (email,password) => dispatch(actions.auth(email,password)),
-        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
+        resetError: () => dispatch(actions.reset()),
     }
 
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(LoginForm,axios));
+export default connect(mapStateToProps,mapDispatchToProps)(LoginForm);

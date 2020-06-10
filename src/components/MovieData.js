@@ -18,7 +18,7 @@ function MovieData(props) {
     return (
         <Card className="MovieCard"
             cover={
-                <img style={{ height: '300px', width: 'auto' }}
+                <img style={{ height: '300px', width: 'auto' }} // make this more dynamic
                     alt="example"
                     src={props.poster}
                 />
@@ -26,7 +26,7 @@ function MovieData(props) {
             <Meta
                 title={newTitle}
                 description={props.synopsis}
-                style={{ marginBottom: '15px' }}
+                style={{ marginBottom: '15px'}}
             />
             <div style={{ position: 'relative' }}>
                 {buttonDisplay}
