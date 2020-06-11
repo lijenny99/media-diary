@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Form, Input, Rate, Switch, Button, Row, Col } from 'antd';
+import { Form, Input, Rate, Switch, Button, Row, Col, AutoComplete } from 'antd';
 import axios from 'axios';
 import withErrorHandler from '../hoc/withErrorHandler';
-import Search from '../components/Search';
 
 const { TextArea } = Input;
 
@@ -24,6 +23,10 @@ class MovieForm extends Component {
         titleChanged: false,
         formWrapper: 24,
         posterWrapper: 0,
+
+        value: '',
+        options: [],
+        visible: false
     }
 
     getMovieData = () => {
@@ -67,15 +70,38 @@ class MovieForm extends Component {
             });
     }
 
-    handleTitleChange = (event) => {
-        this.setState({ title: event.target.value });
-    }
-
     handleSpoilersChange = () => {
         this.setState(prevState => ({
             spoilers: !prevState.spoilers
         }));
     }
+  
+    onTitleSearch = searchText => {
+      if (searchText.length > 2) {
+        this.setState({visible:true});
+        axios.get('https://api.themoviedb.org/3/search/movie?api_key=9523b359a5faa28ea6054e5c5c0a7582&query=' + searchText)
+          .then(response => {
+            this.setState({options: [
+                { key: response.data.results[0].id, value: response.data.results[0].title },
+                { key: response.data.results[1].id, value: response.data.results[1].title },
+                { key: response.data.results[2].id, value: response.data.results[2].title },
+                { key: response.data.results[3].id, value: response.data.results[3].title },
+                { key: response.data.results[4].id, value: response.data.results[4].title }
+            ]})
+          }).catch(err => console.log(err))
+      }
+      else {
+        this.setState({visible:false});
+      }
+    };
+  
+    onTitleSelect = data => {
+      console.log('onSelect', data);
+    };
+  
+    onTitleChange = (data) => {
+      this.setState({value: data});
+    };
 
     render() {
 
@@ -116,11 +142,17 @@ class MovieForm extends Component {
                                 label="Movie Title"
                                 name="title"
                                 rules={[{ required: true, message: 'Please select a movie' }]}>
-                                <Input value={this.state.title}
-                                onChange={this.handleTitleChange}/>
+                                <AutoComplete
+                                    value={this.state.value}
+                                    options={this.state.options}
+                                    onSelect={this.onTitleSelect}
+                                    onChange={this.onTitleChange}
+                                    onSearch={this.onTitleSearch}
+                                    open={this.state.visible}/>
                             </Form.Item>
+
                             {movieInfo}
-                            <Row><Search /></Row>
+
                             <Row>
                                 <Col span={12}>
                                     <Form.Item name="rate" label="Rating" rules={[{ required: true, message: 'Please add a rating' }]} >
