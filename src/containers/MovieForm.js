@@ -58,6 +58,11 @@ class MovieForm extends Component {
             this.setState({ visible: true });
             axios.get('https://api.themoviedb.org/3/search/movie?api_key=9523b359a5faa28ea6054e5c5c0a7582&query=' + searchText)
                 .then(response => {
+
+                    if (response.data.total_results == 0) {
+                        this.setState({ visible: false });
+                    }
+
                     this.setState({
                         options: [
                             { key: response.data.results[0].id, value: response.data.results[0].title },
