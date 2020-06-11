@@ -29,29 +29,6 @@ class MovieForm extends Component {
         visible: false
     }
 
-    getMovieData = () => {
-        if (this.state.title !== '' && this.state.title !== 'undefined') {
-            axios.get('http://www.omdbapi.com/?t=' + this.state.title + '&apikey=3fa2007d')
-            .then(response => {
-                this.setState({
-                    director: response.data['Director'],
-                    year: response.data['Year'],
-                    posterImg: response.data['Poster'],
-                    title: response.data['Title'],
-                    genre: response.data['Genre'],
-                    synopsis: response.data['Plot'],
-                    posterShow: true, 
-                    titleChanged: true, 
-                    formWrapper: 16, 
-                    posterWrapper: 8 
-                })
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        }
-    }
-
     submitMovieData = (values) => {
         const movData = {
             title: this.state.title,
@@ -75,32 +52,48 @@ class MovieForm extends Component {
             spoilers: !prevState.spoilers
         }));
     }
-  
+
     onTitleSearch = searchText => {
-      if (searchText.length > 2) {
-        this.setState({visible:true});
-        axios.get('https://api.themoviedb.org/3/search/movie?api_key=9523b359a5faa28ea6054e5c5c0a7582&query=' + searchText)
-          .then(response => {
-            this.setState({options: [
-                { key: response.data.results[0].id, value: response.data.results[0].title },
-                { key: response.data.results[1].id, value: response.data.results[1].title },
-                { key: response.data.results[2].id, value: response.data.results[2].title },
-                { key: response.data.results[3].id, value: response.data.results[3].title },
-                { key: response.data.results[4].id, value: response.data.results[4].title }
-            ]})
-          }).catch(err => console.log(err))
-      }
-      else {
-        this.setState({visible:false});
-      }
+        if (searchText.length > 2) {
+            this.setState({ visible: true });
+            axios.get('https://api.themoviedb.org/3/search/movie?api_key=9523b359a5faa28ea6054e5c5c0a7582&query=' + searchText)
+                .then(response => {
+                    this.setState({
+                        options: [
+                            { key: response.data.results[0].id, value: response.data.results[0].title },
+                            { key: response.data.results[1].id, value: response.data.results[1].title },
+                            { key: response.data.results[2].id, value: response.data.results[2].title },
+                            { key: response.data.results[3].id, value: response.data.results[3].title },
+                            { key: response.data.results[4].id, value: response.data.results[4].title }
+                        ]
+                    })
+                }).catch(err => console.log(err))
+        }
+        else {
+            this.setState({ visible: false });
+        }
     };
-  
+
     onTitleSelect = data => {
-      console.log('onSelect', data);
-    };
-  
-    onTitleChange = (data) => {
-      this.setState({value: data});
+        axios.get('http://www.omdbapi.com/?t=' + data + '&apikey=3fa2007d')
+            .then(response => {
+                this.setState({
+                    director: response.data['Director'],
+                    year: response.data['Year'],
+                    posterImg: response.data['Poster'],
+                    title: response.data['Title'],
+                    genre: response.data['Genre'],
+                    synopsis: response.data['Plot'],
+                    posterShow: true,
+                    titleChanged: true,
+                    formWrapper: 16,
+                    posterWrapper: 8,
+                    visible: false,
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
 
     render() {
@@ -143,12 +136,10 @@ class MovieForm extends Component {
                                 name="title"
                                 rules={[{ required: true, message: 'Please select a movie' }]}>
                                 <AutoComplete
-                                    value={this.state.value}
                                     options={this.state.options}
                                     onSelect={this.onTitleSelect}
-                                    onChange={this.onTitleChange}
                                     onSearch={this.onTitleSearch}
-                                    open={this.state.visible}/>
+                                    open={this.state.visible} />
                             </Form.Item>
 
                             {movieInfo}
@@ -156,7 +147,7 @@ class MovieForm extends Component {
                             <Row>
                                 <Col span={12}>
                                     <Form.Item name="rate" label="Rating" rules={[{ required: true, message: 'Please add a rating' }]} >
-                                        <Rate allowHalf tooltips={desc} 
+                                        <Rate allowHalf tooltips={desc}
                                         />
                                     </Form.Item>
 
@@ -169,14 +160,11 @@ class MovieForm extends Component {
                             </Row>
                             <Form.Item name="entry"
                                 rules={[{ required: true, message: 'Please write something' }]}>
-                                <TextArea placeholder="How did this movie make you feel 😌" autoSize={{ minRows: 3 }}/>
+                                <TextArea placeholder="How did this movie make you feel 😌" autoSize={{ minRows: 3 }} />
                             </Form.Item>
 
                             <Form.Item style={{ marginTop: '40px', marginBottom: '0px' }}>
-                                <Button type="default" onClick={this.getMovieData}>
-                                    Display Data</Button>
-                                <Button type="primary" htmlType="submit"
-                                style={{marginLeft: '20px'}}>
+                                <Button type="primary" htmlType="submit">
                                     Upload Data</Button>
                             </Form.Item>
 
@@ -189,4 +177,4 @@ class MovieForm extends Component {
     }
 }
 
-export default withErrorHandler(MovieForm,axios);
+export default withErrorHandler(MovieForm, axios);
