@@ -26,10 +26,6 @@ class MoviesData extends Component {
             });
     }
 
-    handleClick = () => {
-        this.setState({clicked:true});
-    }
-
     render () {
         return (
             <div>

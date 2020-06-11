@@ -30,9 +30,6 @@ class MovieForm extends Component {
         if (this.state.title !== '' && this.state.title !== 'undefined') {
             axios.get('http://www.omdbapi.com/?t=' + this.state.title + '&apikey=3fa2007d')
             .then(response => {
-                if (this.state.title !== '') {
-                    this.setState({ })
-                }
                 this.setState({
                     director: response.data['Director'],
                     year: response.data['Year'],
@@ -62,8 +59,8 @@ class MovieForm extends Component {
             synopsis: this.state.synopsis
         }
         axios.post('https://media-diary-25762.firebaseio.com/movies.json', movData)
-            .then(response => {
-                alert('done!'); // should probably fix this lol
+            .then(() => {
+                window.location.reload();
             })
             .catch(error => {
                 console.log(error);

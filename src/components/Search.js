@@ -1,25 +1,34 @@
 import React, { useState } from 'react';
 import { AutoComplete } from 'antd';
-
-const mockVal = (str, repeat = 1) => ({
-  value: str.repeat(repeat),
-});
+import axios from 'axios';
 
 const Search = () => {
   const [value, setValue] = useState('');
   const [options, setOptions] = useState([]);
+  const [visible, setVisibility] = useState(false);
 
   const onSearch = searchText => {
-    setOptions(
-        !searchText ? [] : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)],
-    );
+    if (searchText.length > 2) {
+      setVisibility(true);
+      axios.get('https://api.themoviedb.org/3/search/movie?api_key=9523b359a5faa28ea6054e5c5c0a7582&query=' + searchText)
+        .then(response => {
+          setOptions([{ value: response.data.results[0].title },
+          { value: response.data.results[1].title },
+          { value: response.data.results[2].title },
+          { value: response.data.results[3].title },
+          { value: response.data.results[4].title }])
+        }).catch(err => console.log(err))
+    }
+    else {
+      setVisibility(false);
+    }
   };
 
   const onSelect = data => {
     console.log('onSelect', data);
   };
 
-  const onChange = data => {
+  const onChange = (data) => {
     setValue(data);
   };
 
@@ -32,8 +41,9 @@ const Search = () => {
           width: '100%',
         }}
         onSelect={onSelect}
-        onSearch={onSearch}
         onChange={onChange}
+        onSearch={onSearch}
+        open={visible}
       />
     </>
   );
