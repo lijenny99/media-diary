@@ -7,7 +7,6 @@ import './App.css';
 import * as actions from './store/actions';
 
 import NavigationPane from './components/Navigation';
-import Books from './components/Books';
 import Movies from './components/Movies';
 import Landing from './components/Landing';
 import Login from './components/Login';
@@ -32,7 +31,6 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path="/movies" component={Movies} />
-          <Route path="/books" component={Books} />
           <Route path="/logout" component={Logout} />
           <Route path="/" exact component={Landing} />
           <Redirect to="/" />
