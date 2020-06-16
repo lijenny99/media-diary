@@ -1,12 +1,13 @@
 .App {
   margin-top: 30px;
+  margin-left: 50px;
   padding: 20px;
-  overflow: hidden;
   font-family: 'Titillium Web', sans-serif;
+  background-color: white;
 }
 
 .LandingText {
-  margin-left: 50px;
+  height: 350px;
 }
 
 .LandingText h1 {
@@ -22,7 +23,6 @@
   text-transform: uppercase;
   margin-bottom: -5px;
 }
-
 
 .Menu {
   text-align: right;
@@ -48,6 +48,22 @@
   width: 60%;
   margin: 40px auto;
   box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.2);
+}
+
+.MoviePoster {
+  height: 200px;
+  width: auto;
+  margin-right: 70px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  text-align: left;
+  box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.2);
+}
+
+.MovieTitle {
+  font-weight: 600;
+  color: #313639;
+  margin-bottom: 30px;
 }
 
 .MovieCard::before {
