@@ -19,29 +19,33 @@ class MoviesData extends Component {
                         id: key
                     });
                 }
-                this.setState({ movies: fetchedMovies});
+                this.setState({ movies: fetchedMovies });
             })
             .catch(err => {
                 console.log(err);
             });
     }
 
-    render () {
+    render() {
         return (
             <div>
-                {this.state.movies.map(movie => (
-                    <MovieData 
+                {this.state.movies.sort(function (a, b) {
+                    if (a.title.toLowerCase() < b.title.toLowerCase()) return -1;
+                    if (a.title.toLowerCase() > b.title.toLowerCase()) return 1;
+                    return 0;
+                }).map(movie => (
+                    <MovieData
                         key={movie.id}
                         title={movie.title}
                         poster={movie.posterImg}
                         rating={movie.rating}
-                        spoilers={movie.spoilers} 
+                        spoilers={movie.spoilers}
                         entry={movie.entry}
-                        synopsis={movie.synopsis}/>
+                        synopsis={movie.synopsis} />
                 ))}
             </div>
         );
     }
 }
 
-export default withErrorHandler(MoviesData,axios);
+export default withErrorHandler(MoviesData, axios);

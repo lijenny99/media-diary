@@ -6,7 +6,7 @@ import './App.css';
 
 import * as actions from './store/actions';
 
-import NavigationPane from './components/Navigation';
+// import NavigationPane from './components/Navigation';
 import Movies from './components/Movies';
 import Landing from './components/Landing';
 import Login from './components/Login';
@@ -39,7 +39,7 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <NavigationPane isAuthenticated={this.props.isAuth} />
+        {/* <NavigationPane isAuthenticated={this.props.isAuth} /> */}
         {routes}
       </div>
     )

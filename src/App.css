@@ -1,8 +1,28 @@
 .App {
-  text-align: center;
+  margin-top: 30px;
   padding: 20px;
   overflow: hidden;
+  font-family: 'Titillium Web', sans-serif;
 }
+
+.LandingText {
+  margin-left: 50px;
+}
+
+.LandingText h1 {
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.LandingText h4 {
+  color: lightgray;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: -5px;
+}
+
 
 .Menu {
   text-align: right;
