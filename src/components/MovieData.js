@@ -17,7 +17,7 @@ function MovieData(props) {
 
     return (
         <div style={{display: 'inline-block'}}>
-            <img className="MoviePoster" // make this more dynamic
+            <img className="MoviePoster" 
                 alt="Movie poster"
                 src={props.poster}
             />

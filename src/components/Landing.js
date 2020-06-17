@@ -6,7 +6,7 @@ const Landing = (props) => {
         <div>
             <div className="LandingText">
                 <h4>Jenny's Quarantine Movie Diary</h4>
-                <h1>What I've Been Watching</h1></div>
+                <h1>The Highlight Reel</h1></div>
             <MoviesData />
         </div>
     )
