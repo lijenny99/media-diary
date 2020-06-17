@@ -1,4 +1,11 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { ThemeProvider } from 'styled-components';
+import {useDarkMode} from './components/useDarkMode';
+import { GlobalStyles } from './styles/GlobalStyles';
+import { lightTheme, darkTheme } from './styles/theme';
+
+import Toggler from "./components/Toggler"
+
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
@@ -12,38 +19,41 @@ import Landing from './components/Landing';
 import Login from './components/Login';
 import Logout from './containers/Logout';
 
-class App extends Component {
-  componentDidMount() {
-    this.props.onTryAutoSignup();
-  }
+const App = () => {
+  let routes = (
+    <Switch>
+      <Route path="/login" component={Login} />
+      <Route path="/" exact component={Landing} />
+      <Redirect to="/" />
+    </Switch>
 
-  render() {
-    let routes = (
+  )
+
+  if (true) {
+    routes = (
       <Switch>
-        <Route path="/login" component={Login} />
+        <Route path="/movies" component={Movies} />
+        <Route path="/logout" component={Logout} />
         <Route path="/" exact component={Landing} />
         <Redirect to="/" />
       </Switch>
-
-    )
-
-    if (this.props.isAuth) {
-      routes = (
-        <Switch>
-          <Route path="/movies" component={Movies} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/" exact component={Landing} />
-          <Redirect to="/" />
-        </Switch>
-      )
-    }
-    return (
-      <div className="App">
-        {/* <NavigationPane isAuthenticated={this.props.isAuth} /> */}
-        {routes}
-      </div>
     )
   }
+
+  const [theme, themeToggler] = useDarkMode();
+  const themeMode = theme === 'light' ? lightTheme : darkTheme;
+  
+
+  return (
+    <ThemeProvider theme={themeMode}>
+      <GlobalStyles />
+      <div className="App">
+        {/* <NavigationPane isAuthenticated={this.props.isAuth} /> */}
+        <Toggler theme={theme} toggleTheme={themeToggler} />
+        {routes}
+      </div>
+    </ThemeProvider>
+  )
 }
 
 const mapStateToProps = state => {
@@ -58,4 +68,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
