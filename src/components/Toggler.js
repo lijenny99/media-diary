@@ -10,10 +10,14 @@ const IconWrapper = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.3s ease;
+  transition: 0.3s ease;
   margin-left: 30px;
   &:hover {
     opacity: 1;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: none;
   }
   &[data-a11y="true"]:focus::after {
     content: "";
@@ -94,12 +98,8 @@ const Toggle = ({ theme, toggleTheme }) => {
         isDark = true;
     }
     return (
-        // <div style={{float:'right'}} onClick={toggleTheme} >
-        //     <MoonOrSun isDark={isDark} />
-        // <MoonMask isDark={isDark} />
-        // </div>
         <IconWrapper
-            style={{float:'right'}}
+            style={{ float: 'right' }}
             isDark={isDark}
             onClick={toggleTheme}
             data-a11y="false"
