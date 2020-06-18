@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import {useDarkMode} from './components/useDarkMode';
 import { GlobalStyles } from './styles/GlobalStyles';
@@ -40,10 +40,10 @@ const App = () => {
     )
   }
 
-  const [theme, themeToggler] = useDarkMode();
+  const [theme, themeToggler, mountedComponent] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   
-
+  if (!mountedComponent) return <div/>
   return (
     <ThemeProvider theme={themeMode}>
       <GlobalStyles />

@@ -14,3 +14,4 @@ export const darkTheme = {
     background: "#111216",
     hover: "rgba(255, 255, 255, 0.07)",
 }
+export const colorModeTransition = 'background 0.25s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad)';

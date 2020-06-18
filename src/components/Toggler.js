@@ -12,6 +12,7 @@ const IconWrapper = styled.button`
   justify-content: center;
   transition: 0.3s ease;
   margin-left: 30px;
+  cursor: pointer;
   &:hover {
     opacity: 1;
   }
@@ -87,7 +88,7 @@ const MoonMask = styled.div`
   background: ${p => p.theme.background};
   transform: translate(${p => (p.isDark ? "14px, -14px" : "0, 0")});
   opacity: ${p => (p.isDark ? 0 : 1)};
-  transition: ${p => p.theme.colorModeTransition}, transform 0.45s ease;
+  transition: ${p => p.colorModeTransition}, transform 0.45s ease;
 `;
 
 const Toggle = ({ theme, toggleTheme }) => {
@@ -99,7 +100,7 @@ const Toggle = ({ theme, toggleTheme }) => {
     }
     return (
         <IconWrapper
-            style={{ float: 'right' }}
+            style={{float:'right'}}
             isDark={isDark}
             onClick={toggleTheme}
             data-a11y="false"

@@ -1,5 +1,33 @@
 import React, { useState } from 'react';
-import { Card, Button } from 'antd';
+import styled from "styled-components"
+// import { Card, Button } from 'antd';
+
+const MoviePoster = styled.img`
+    height: 225px;
+    width: 150px;
+    margin-right: 70px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: left;
+    box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.2);
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+    &:hover {
+        box-shadow: 0 10px 70px 0 rgba(0, 0, 0, 0.5);
+        transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        transform: scale(1.25,1.25) translateY(-50px)
+    }
+      
+    &:hover::after {
+        opacity: 1;
+    }
+`;
+
+const MovieTitle = styled.p`
+    font-weight: 600;
+    margin-bottom: 30px;
+`;
 
 function MovieData(props) {
 
@@ -16,12 +44,12 @@ function MovieData(props) {
     // }
 
     return (
-        <div style={{display: 'inline-block'}}>
-            <img className="MoviePoster" 
+        <div style={{ display: 'inline-block' }}>
+            <MoviePoster
                 alt="Movie poster"
                 src={props.poster}
             />
-            <p className="MovieTitle">{props.title}</p>
+            <MovieTitle>{props.title}</MovieTitle>
         </div>
 
         // <Card className="MovieCard"
