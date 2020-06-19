@@ -3,6 +3,7 @@ import styled from "styled-components"
 // import { Card, Button } from 'antd';
 
 const MoviePoster = styled.img`
+    cursor: pointer;
     height: 225px;
     width: 150px;
     margin-right: 70px;
@@ -17,10 +18,6 @@ const MoviePoster = styled.img`
         box-shadow: 0 10px 70px 0 rgba(0, 0, 0, 0.5);
         transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
         transform: scale(1.25,1.25) translateY(-50px)
-    }
-      
-    &:hover::after {
-        opacity: 1;
     }
 `;
 
@@ -44,7 +41,7 @@ function MovieData(props) {
     // }
 
     return (
-        <div style={{ display: 'inline-block' }}>
+        <div style={{ }}>
             <MoviePoster
                 alt="Movie poster"
                 src={props.poster}

@@ -104,8 +104,8 @@ const Toggle = ({ theme, toggleTheme }) => {
             isDark={isDark}
             onClick={toggleTheme}
             data-a11y="false"
-            aria-label={isDark ? "Activate light mode" : "Activate dark mode"}
-            title={isDark ? "Activate light mode" : "Activate dark mode"}
+            aria-label={isDark ? "Turn the lights on" : "Dim the lights"}
+            title={isDark ? "Turn the lights on" : "Dim the lights"}
         >
             <MoonOrSun isDark={isDark} />
             <MoonMask isDark={isDark} />
