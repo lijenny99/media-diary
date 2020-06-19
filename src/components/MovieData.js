@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import styled from "styled-components"
 // import { Card, Button } from 'antd';
 
+const Wrapper = styled.div`
+    margin-left: 30px;
+    margin-right: 30px;
+`;
+
 const MoviePoster = styled.img`
     cursor: pointer;
     height: 225px;
     width: 150px;
-    margin-right: 70px;
     margin-bottom: 20px;
     border-radius: 5px;
     text-align: left;
@@ -41,13 +45,13 @@ function MovieData(props) {
     // }
 
     return (
-        <div style={{ }}>
+        <Wrapper>
             <MoviePoster
                 alt="Movie poster"
                 src={props.poster}
             />
             <MovieTitle>{props.title}</MovieTitle>
-        </div>
+        </Wrapper>
 
         // <Card className="MovieCard"
         //     cover={

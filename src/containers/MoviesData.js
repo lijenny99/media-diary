@@ -5,28 +5,6 @@ import MovieData from '../components/MovieData';
 import axios from 'axios'
 import withErrorHandler from '../hoc/withErrorHandler';
 
-function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, display: "block", background: "red" }}
-            onClick={onClick}
-        />
-    );
-}
-
-function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, display: "block", background: "green" }}
-            onClick={onClick}
-        />
-    );
-}
-
 class MoviesData extends Component {
     state = {
         movies: [],
@@ -52,12 +30,13 @@ class MoviesData extends Component {
     render() {
         const settings = {
             dots: false,
+            arrows: false,
+            pauseOnHover: true,
             infinite: true,
-            speed: 1000,
             slidesToShow: 6,
-            slidesToScroll: 6,
-            nextArrow: <SampleNextArrow />,
-            prevArrow: <SamplePrevArrow />
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 0, speed: 6000, cssEase: 'linear'
         };
 
         let slides = (
