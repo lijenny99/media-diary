@@ -4,7 +4,7 @@
 }
 
 .LandingText {
-  height: 320px;
+  height: 310px;
 }
 
 .LandingText h1 {
@@ -77,4 +77,21 @@
 
 .slick-list {
   overflow: visible;
+  order: 3;
+}
+
+.slick-arrow {
+  position: absolute;
+  right: 0;
+  top: -30px;
+}
+
+.slick-prev {
+  margin-right: 30px;
+  order: 1;
+  left: auto;
+}
+
+.slick-next {
+  order: 2;
 }

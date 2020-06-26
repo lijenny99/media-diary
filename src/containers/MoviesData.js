@@ -30,13 +30,12 @@ class MoviesData extends Component {
     render() {
         const settings = {
             dots: false,
-            arrows: false,
             pauseOnHover: true,
             infinite: true,
             slidesToShow: 6,
             slidesToScroll: 1,
             autoplay: true,
-            autoplaySpeed: 0, speed: 6000, cssEase: 'linear'
+            autoplaySpeed: 1500
         };
 
         let slides = (
