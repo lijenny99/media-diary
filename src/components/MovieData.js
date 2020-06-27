@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from "styled-components"
-// import { Card, Button } from 'antd';
+
+import { Modal } from 'antd';
 
 const Wrapper = styled.div`
     margin-left: 30px;
@@ -30,7 +31,12 @@ const MovieTitle = styled.p`
     margin-bottom: 30px;
 `;
 
+const MovieModal = styled(Modal)`
+    
+`
+
 function MovieData(props) {
+    const [visible, toggleVisible] = useState(false);
 
     // const { Meta } = Card;
     // const [clicked, handleClick] = useState(false);
@@ -44,38 +50,60 @@ function MovieData(props) {
     //     )
     // }
 
+    const showModal = () => {
+        toggleVisible(true);
+    };
+
+    const handleCancel = e => {
+        toggleVisible(false);
+    };
+
     return (
         <Wrapper>
             <MoviePoster
                 alt="Movie poster"
                 src={props.poster}
+                onClick={showModal}
             />
+            <MovieModal
+                title={props.title}
+                centered
+                closable={false}
+                footer={null}
+                visible={visible}
+                width={'90%'}
+                onCancel={handleCancel}
+                maskStyle={{
+                    backdropFilter: 'blur(4px)', 
+                    webkitFilter: 'blur(4px)'
+                }}
+            ></MovieModal>
             <MovieTitle>{props.title}</MovieTitle>
         </Wrapper>
-
-        // <Card className="MovieCard"
-        //     cover={
-        //         <img style={{ height: '300px', width: 'auto' }} // make this more dynamic
-        //             alt="example"
-        //             src={props.poster}
-        //         />
-        //     }>
-        //     <Meta
-        //         title={newTitle}
-        //         description={props.synopsis}
-        //         style={{ marginBottom: '15px'}}
-        //     />
-        //     <div style={{ position: 'relative' }}>
-        //         {buttonDisplay}
-        //         <p className={
-        //             !props.spoilers ? null :
-        //             [
-        //                 !clicked ? 'blurry-text' : null
-        //             ]
-        //         }>{props.entry}</p>
-        //     </div>
-        // </Card>
     );
 };
 
 export default MovieData;
+
+// <Card className="MovieCard"
+//     cover={
+//         <img style={{ height: '300px', width: 'auto' }} // make this more dynamic
+//             alt="example"
+//             src={props.poster}
+//         />
+//     }>
+//     <Meta
+//         title={newTitle}
+//         description={props.synopsis}
+//         style={{ marginBottom: '15px'}}
+//     />
+//     <div style={{ position: 'relative' }}>
+//         {buttonDisplay}
+//         <p className={
+//             !props.spoilers ? null :
+//             [
+//                 !clicked ? 'blurry-text' : null
+//             ]
+//         }>{props.entry}</p>
+//     </div>
+// </Card>
