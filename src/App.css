@@ -95,3 +95,7 @@
 .slick-next {
   order: 2;
 }
+
+.ant-modal-content {
+  border-radius: 10px;
+}
