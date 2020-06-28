@@ -98,4 +98,10 @@
 
 .ant-modal-content {
   border-radius: 10px;
+  height: 50%;
+}
+
+.entry {
+  height: 130px;
+  overflow: scroll;
 }

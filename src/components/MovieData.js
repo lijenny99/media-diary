@@ -36,7 +36,7 @@ const MovieModal = styled(Modal)`
 `
 
 const Heading = styled.h2`
-    font-size: 32px;
+    font-size: 24px;
     font-weight: bold;
 `
 
@@ -47,9 +47,9 @@ const Synopsis = styled.p`
 const FeaturedPoster = styled.img`
     float: left;
     margin-right: 30px;
-    margin-top: -150px;
+    margin-top: -100px;
     border-radius: 10px;
-    height: 400px;
+    height: 350px;
     width: auto;
     box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.5);
 `
@@ -103,9 +103,9 @@ function MovieData(props) {
                     <div style={{ position: 'relative' }}>
                         {buttonDisplay}
                         <p className={
-                            !props.spoilers ? null :
+                            !props.spoilers ? 'entry' :
                                 [
-                                    !clicked ? 'blurry-text' : null
+                                    !clicked ? 'blurry-text entry' : 'entry'
                                 ]
                         }>{props.entry}</p>
                     </div>
