@@ -47,10 +47,10 @@ const Synopsis = styled.p`
 const FeaturedPoster = styled.img`
     float: left;
     margin-right: 30px;
-    margin-top: -100px;
+    margin-top: -70px;
     border-radius: 10px;
     height: 350px;
-    width: auto;
+    width: 225px;
     box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.5);
 `
 
@@ -100,15 +100,13 @@ function MovieData(props) {
                         src={props.poster} />
                     <Heading>{props.title}</Heading>
                     <Synopsis>{props.synopsis}</Synopsis>
-                    <div style={{ position: 'relative' }}>
-                        {buttonDisplay}
                         <p className={
                             !props.spoilers ? 'entry' :
                                 [
                                     !clicked ? 'blurry-text entry' : 'entry'
                                 ]
-                        }>{props.entry}</p>
-                    </div>
+                        }>  {buttonDisplay}
+                            {props.entry}</p>
                 </div>
             </MovieModal>
             <MovieTitle>{props.title}</MovieTitle>
