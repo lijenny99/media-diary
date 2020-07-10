@@ -6,8 +6,6 @@ import styled from "styled-components"
 import withErrorHandler from '../hoc/withErrorHandler';
 import me from '../assets/jen.png'
 
-const { TextArea } = Input;
-
 const Wrapper = styled.div`
     margin: 30px 200px;
 `;
@@ -27,13 +25,7 @@ class Suggestion extends Component {
 
     state = {
         title: '',
-        posterImg: '',
         synopsis: '',
-        posterShow: false,
-        entry: '',
-        titleChanged: false,
-        formWrapper: 24,
-        posterWrapper: 0,
 
         value: '',
         options: [],
@@ -45,13 +37,9 @@ class Suggestion extends Component {
     submitMovieData = (values) => {
         const movData = {
             title: this.state.title,
-            posterImg: this.state.posterImg,
-            rating: values.rate,
-            entry: values.entry,
-            spoilers: this.state.spoilers,
             synopsis: this.state.synopsis
         }
-        axios.post('https://media-diary-25762.firebaseio.com/movies.json', movData)
+        axios.post('https://media-diary-25762.firebaseio.com/suggestions.json', movData)
             .then(() => {
                 window.location.reload();
             })
@@ -91,13 +79,8 @@ class Suggestion extends Component {
         axios.get('http://www.omdbapi.com/?t=' + data + '&apikey=3fa2007d')
             .then(response => {
                 this.setState({
-                    posterImg: response.data['Poster'],
                     title: response.data['Title'],
                     synopsis: response.data['Plot'],
-                    posterShow: true,
-                    titleChanged: true,
-                    formWrapper: 16,
-                    posterWrapper: 8,
                     visible: false,
                 })
             })
@@ -108,56 +91,36 @@ class Suggestion extends Component {
 
     render() {
 
-        let poster = null
-        if (this.state.posterShow) {
-            poster = (
-                <img className="Poster" src={this.state.posterImg} alt="Movie poster"></img>
-            )
-        }
-
         let form = (
             <div>
-                <Row>
-                    <Col span={this.state.formWrapper}>
-                        <Form onFinish={this.submitMovieData} hideRequiredMark={true} >
-                            <Row>
-                                <Col span={12}>
-                                    <Form.Item
-                                        label="Movie Title"
-                                        name="title"
-                                        rules={[{ required: true, message: 'Please select a movie' }]}>
-                                        <AutoComplete
-                                            options={this.state.options}
-                                            onSelect={this.onTitleSelect}
-                                            onSearch={this.onTitleSearch}
-                                            open={this.state.visible} />
-                                    </Form.Item>
-                                </Col>
-                                <Col span={12}>
-                                    <Form.Item
-                                        label="Your Name"
-                                        name="name"
-
-                                        rules={[{ required: false }]}>
-                                        <Input placeholder="so I can tell you when I watch it!" />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-
-                            <Form.Item name="entry"
-                                rules={[{ required: true, message: 'Please write something' }]}>
-                                <TextArea placeholder="How did this movie make you feel 😌" autoSize={{ minRows: 3 }} />
+                <Form onFinish={this.submitMovieData} hideRequiredMark={true} >
+                    <Form.Item labelCol={{span: 4}} wrapperCol={{span: 20}}
+                        label="Movie Title(s)"
+                        name="title"
+                        rules={[{ required: true, message: 'Please select a movie' }]}>
+                        <AutoComplete
+                            options={this.state.options}
+                            onSelect={this.onTitleSelect}
+                            onSearch={this.onTitleSearch}
+                            open={this.state.visible} />
+                    </Form.Item>
+                    <Row>
+                        <Col>
+                            <Form.Item labelCol={{span: 4}}
+                                wrapperCol={{span:15}}
+                                label="Your Name"
+                                name="name"
+                                rules={[{ required: false }]}>
+                                <Input placeholder="so I can tell you when I watch it!" />
                             </Form.Item>
-
-                            <Form.Item style={{ marginTop: '40px', marginBottom: '0px' }}>
+                        </Col>
+                        <Col span={5} style={{ textAlign: 'right' }}>
+                            <Form.Item>
                                 <Button type="primary" htmlType="submit">
-                                    Upload Data</Button>
-                            </Form.Item>
-
-                        </Form>
-                    </Col>
-                    <Col span={this.state.posterWrapper}>{poster}</Col>
-                </Row>
+                                    Send to Jenny</Button>
+                            </Form.Item></Col>
+                    </Row>
+                </Form>
             </div>
         )
 
@@ -177,11 +140,11 @@ class Suggestion extends Component {
                     closable={false}
                     onClose={onClose}
                     visible={this.state.drawerVisible}
-                    height={500}
+                    height={400}
                 >
                     <Wrapper>
-                        <img src={me} alt={'Avatar'} style={{ width: '200px', height: 'auto', float: 'left', marginRight: '30px' }} />
-                        <Heading>Hi there! Thanks for viewing my quarantine media diary <span>😊</span></Heading>
+                        <img src={me} alt={'Avatar'} style={{ width: '200px', height: 'auto', float: 'left', marginRight: '40px' }} />
+                        <Heading>Hi there! Thanks for viewing my quarantine media diary <span role="img" aria-label="smile" >😊</span></Heading>
                         <p>As you can see, I have watched <em>a lot</em> of movies in the last few months. At the same time, there's still so many more amazing ones out there that I have yet to discover. If you have any suggestions on movies you think I should watch or I would like, please share them with me!</p>
                         {form}
                     </Wrapper>
