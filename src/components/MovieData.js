@@ -31,10 +31,6 @@ const MovieTitle = styled.p`
     margin-bottom: 30px;
 `;
 
-const MovieModal = styled(Modal)`
-
-`
-
 const Heading = styled.h2`
     font-size: 24px;
     font-weight: bold;
@@ -81,7 +77,7 @@ function MovieData(props) {
                 src={props.poster}
                 onClick={showModal}
             />
-            <MovieModal
+            <Modal
                 title={null}
                 closable={false}
                 footer={null}
@@ -108,7 +104,7 @@ function MovieData(props) {
                         }>  {buttonDisplay}
                             {props.entry}</p>
                 </div>
-            </MovieModal>
+            </Modal>
             <MovieTitle>{props.title}</MovieTitle>
         </Wrapper>
     );

@@ -1,6 +1,7 @@
 .App {
   margin: 50px 60px;
   font-family: 'Titillium Web', sans-serif;
+  overflow-x: hidden;
 }
 
 .LandingText {
