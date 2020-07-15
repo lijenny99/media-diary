@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Row, Col, AutoComplete, Drawer } from 'antd';
+import { Form, Input, Button, AutoComplete, Drawer } from 'antd';
 
 import axios from 'axios';
 import styled from "styled-components"
@@ -21,7 +21,14 @@ const Heading = styled.h2`
     font-weight: bold;
 `
 
+const Body = styled.h4`
+    font-weight: normal;
+    margin-bottom: 20px;
+`
+
 class Suggestion extends Component {
+
+    formRef = React.createRef();
 
     state = {
         title: '',
@@ -89,12 +96,16 @@ class Suggestion extends Component {
             });
     };
 
+    onReset = () => {
+        this.formRef.current.resetFields();
+      };
+
     render() {
 
         let form = (
             <div>
                 <Form onFinish={this.submitMovieData} hideRequiredMark={true} >
-                    <Form.Item labelCol={{span: 4}} wrapperCol={{span: 20}}
+                    <Form.Item labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}
                         label="Movie Title(s)"
                         name="title"
                         rules={[{ required: true, message: 'Please select a movie' }]}>
@@ -104,22 +115,24 @@ class Suggestion extends Component {
                             onSearch={this.onTitleSearch}
                             open={this.state.visible} />
                     </Form.Item>
-                    <Row>
-                        <Col>
-                            <Form.Item labelCol={{span: 4}}
-                                wrapperCol={{span:15}}
-                                label="Your Name"
-                                name="name"
-                                rules={[{ required: false }]}>
-                                <Input placeholder="so I can tell you when I watch it!" />
-                            </Form.Item>
-                        </Col>
-                        <Col span={5} style={{ textAlign: 'right' }}>
-                            <Form.Item>
-                                <Button type="primary" htmlType="submit">
-                                    Send to Jenny</Button>
-                            </Form.Item></Col>
-                    </Row>
+
+                    <Form.Item labelCol={{ span: 4 }}
+                        wrapperCol={{ span: 8 }}
+                        label="Your Name"
+                        name="name"
+                        rules={[{ required: false }]}>
+                        <Input placeholder="so I can tell you when I watch it!" />
+                    </Form.Item>
+
+
+                    <Form.Item wrapperCol={{ offset: 4, span: 20 }}>
+                        <Button type="primary" htmlType="submit" style={{marginRight: '20px'}}>
+                            Send to Jenny</Button>
+                        <Button type="default" onClick={this.onReset}>
+                            Reset
+                        </Button>
+                    </Form.Item>
+
                 </Form>
             </div>
         )
@@ -145,7 +158,7 @@ class Suggestion extends Component {
                     <Wrapper>
                         <img src={me} alt={'Avatar'} style={{ width: '200px', height: 'auto', float: 'left', marginRight: '40px' }} />
                         <Heading>Hi there! Thanks for viewing my quarantine media diary <span role="img" aria-label="smile" >😊</span></Heading>
-                        <p>As you can see, I have watched <em>a lot</em> of movies in the last few months. At the same time, there's still so many more amazing ones out there that I have yet to discover. If you have any suggestions on movies you think I should watch or I would like, please share them with me!</p>
+                        <Body>As you can see, I have watched <em>a lot</em> of movies in the last few months. At the same time, there's still so many more amazing ones out there that I have yet to discover. If you have any suggestions on movies you think I should watch or I would like, please share them with me!</Body>
                         {form}
                     </Wrapper>
                 </Drawer>
